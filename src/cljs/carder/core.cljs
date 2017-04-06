@@ -114,10 +114,11 @@
 
 (def w (t/writer :json))
 (def app-state (atom (om/tree->db Dashboard init-data true)))
+(def parser (om/parser {:read read}))
 
 (defn ^:export main []
   (if-let [node (gdom/getElement "app")]
     (let [reconciler (om/reconciler
                        {:state app-state
-                        :parser (om/parser {:read read})})]
+                        :parser parser})]
       (om/add-root! reconciler Dashboard node))))
